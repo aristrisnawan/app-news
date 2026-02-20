@@ -1,4 +1,5 @@
 import AppText from "@/components/app-text";
+import { router } from "expo-router";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -15,7 +16,7 @@ const LandingPage = () => {
                 </AppText>
             </View>
             <View style={styles.buttonContainer}>
-                <TouchableOpacity style={styles.button} onPress={() => alert('Clicked')}>
+                <TouchableOpacity style={styles.button} onPress={() =>router.navigate('/home')}>
                     <Text style={styles.textButton}>Get Started</Text>
                 </TouchableOpacity>
             </View>
