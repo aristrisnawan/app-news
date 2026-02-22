@@ -15,19 +15,20 @@ const Home = () => {
             indicatorStyle={{ backgroundColor: 'transparent', height: 1 }}
             labelStyle={{ fontWeight: 'bold', fontSize: 14 }}
             tabStyle={{width: 'auto', paddingHorizontal: 0, marginRight: 10}}
-            scrollEnabled={true}
+            scrollEnabled={false}
             activeColor="blue"
             inactiveColor="gray"
             pressColor="#f0f0f0"
         />)
 
     const renderScene = ({ route }: any) => {
+        const isFocused = routes[index].key === route.key;
         switch (route.key) {
-            case 'first':
-                return <AllNews />;
-            case 'second':
+            case 'all':
+                return <AllNews isFocused={isFocused}/>;
+            case 'otomotif':
                 return <OtomotifNews />;
-            case 'third':
+            case 'business':
                 return <Text>Business News</Text>;
             default:
                 return null;
@@ -35,9 +36,9 @@ const Home = () => {
     };
 
     const routes = [
-        { key: 'first', title: 'All' },
-        { key: 'second', title: 'Otomotif' },
-        { key: 'third', title: 'Business' },
+        { key: 'all', title: 'All' },
+        { key: 'otomotif', title: 'Otomotif' },
+        { key: 'business', title: 'Business' },
     ];
 
     const layout = useWindowDimensions();
@@ -49,12 +50,12 @@ const Home = () => {
             <Text style={styles.title}>Breaking News</Text>
             <CardComponent />
             <TabView
-                lazy
                 style={{ marginTop: 20, backgroundColor: 'transparent' }}
                 navigationState={{ index, routes }}
                 renderTabBar={renderTabBar}
                 renderScene={renderScene}
                 onIndexChange={setIndex}
+                animationEnabled={true}
                 initialLayout={{ width: layout.width }}
             />
         </SafeAreaView>
