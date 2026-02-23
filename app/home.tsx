@@ -1,6 +1,8 @@
 import CardComponent from "@/components/cardComponent";
 import SearchBarComponent from "@/components/searchBar";
-import { useState } from "react";
+import Api from "@/services/api";
+import { allNews } from "@/services/apiType";
+import { useEffect, useState } from "react";
 import { StyleSheet, Text, useWindowDimensions } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabBar, TabView } from 'react-native-tab-view';
@@ -8,6 +10,25 @@ import AllNews from "./allNews";
 import OtomotifNews from "./otomotifNews";
 
 const Home = () => {
+
+    
+    const [allNews, setAllNews] = useState<allNews | null>(null);
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+       const getAllNews = async () =>{
+        try {
+            setLoading(true);
+            const response = await Api.AllNews()
+            setAllNews(response)
+        } catch (error) {
+            console.log("Gagal mengambil berita:", error)
+        } finally {
+            setLoading(false)
+        }
+       }
+       getAllNews()
+    },[])
     const renderTabBar = (props: any) => (
         <TabBar
             {...props}
@@ -25,7 +46,7 @@ const Home = () => {
         const isFocused = routes[index].key === route.key;
         switch (route.key) {
             case 'all':
-                return <AllNews isFocused={isFocused}/>;
+                return <AllNews isFocused={isFocused} data={allNews}/>;
             case 'otomotif':
                 return <OtomotifNews />;
             case 'business':

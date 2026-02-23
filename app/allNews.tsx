@@ -1,9 +1,15 @@
 import LoadingComponent from "@/components/loadingComponent";
+import { allNews } from "@/services/apiType";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, Text, View } from "react-native";
 
-const AllNews = ({ isFocused }: { isFocused: boolean }) => {
+
+interface dataArticle {
+    isFocused: boolean
+    data: allNews | null
+}
+const AllNews = ( { isFocused, data  } : dataArticle) => {
 
     const [isLoading, setIsLoading] = useState(true);
 
@@ -25,49 +31,56 @@ const AllNews = ({ isFocused }: { isFocused: boolean }) => {
         );
     }
 
-    const newsData = [
-        {
-            id: 1,
-            title: "The Bose QuietComfort Ultra Gen 2 Headphones ",
-            date: "10 Jan 2026",
-            imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        },
-        {
-            id: 2,
-            title: "The Google Pixel 10a Is Barely Different From the Pixel 9a",
-            date: "10 Jan 2026",
-            imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        },
-        {
-            id: 3,
-            title: "The Apple iPhone 15 Pro Max Is the Ultimate Power User Phone",
-            date: "10 Jan 2026",
-            imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        },
-        {
-            id: 4,
-            title: "The Samsung Galaxy S24 Ultra Is the Best Android Phone You Can Buy",
-            date: "10 Jan 2026",
-            imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
-        }
-    ]
+    const newsData = data?.articles || [];
+
+    // const newsData = [
+    //     {
+    //         id: 1,
+    //         title: "The Bose QuietComfort Ultra Gen 2 Headphones ",
+    //         date: "10 Jan 2026",
+    //         imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    //     },
+    //     {
+    //         id: 2,
+    //         title: "The Google Pixel 10a Is Barely Different From the Pixel 9a",
+    //         date: "10 Jan 2026",
+    //         imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    //     },
+    //     {
+    //         id: 3,
+    //         title: "The Apple iPhone 15 Pro Max Is the Ultimate Power User Phone",
+    //         date: "10 Jan 2026",
+    //         imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    //     },
+    //     {
+    //         id: 4,
+    //         title: "The Samsung Galaxy S24 Ultra Is the Best Android Phone You Can Buy",
+    //         date: "10 Jan 2026",
+    //         imageUrl: 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    //     }
+    // ]
+    const imageDefaul = 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     return (
             <FlatList
                 data={newsData}
                 showsVerticalScrollIndicator={false}
                 contentContainerStyle={{ paddingBottom: 20 }}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item, index) => item.source.id ?? item.url ?? index.toString()}
                 renderItem={({ item }) => {
                     return (
                         <View style={styles.container}>
                             <View style={styles.imageContainer}>
-                                <Image style={styles.image} source={{ uri: item.imageUrl }} />
+                                <Image style={styles.image} source={{ uri: item.urlToImage ? item.urlToImage : imageDefaul }} />
                             </View>
                             <View style={styles.textContainer}>
                                 <Text numberOfLines={2} ellipsizeMode="tail" style={styles.title}>{item.title} </Text>
                                 <View style={styles.dateContainer}>
                                     <MaterialIcons name="calendar-month" size={24} color="gray" />
-                                    <Text style={styles.dateText}>{item.date}</Text>
+                                    <Text style={styles.dateText}>{new Date(item.publishedAt).toLocaleDateString('id-ID',{
+                                        day: 'numeric',
+                                        month: 'long',
+                                        year: 'numeric'
+                                    })}</Text>
                                 </View>
                             </View>
                         </View>
