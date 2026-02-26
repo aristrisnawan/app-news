@@ -1,9 +1,11 @@
-import { Text, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
 
 const OtomotifNews = () => {
     return(
         <View>
-            <Text>Otomotif News</Text>
+            <TouchableOpacity style={{backgroundColor: 'blue', padding: 20}}>
+                <Text>Tombol</Text>
+            </TouchableOpacity>
         </View>
     )
 }
