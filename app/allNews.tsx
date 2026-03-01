@@ -13,6 +13,9 @@ interface dataArticle {
 const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
 
     const [isLoading, setIsLoading] = useState(true);
+    const [visibleData, setVisibleData] = useState<any[]>([]);
+    const [page, setPage] = useState(1);
+    const LIMIT = 5;
 
     useEffect(() => {
         if (isFocused) {
@@ -24,6 +27,15 @@ const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
         }
     }, [isFocused]);
 
+
+    const newsData = data?.articles || [];
+
+    useEffect(() => {
+        if (data?.articles) {
+            setVisibleData(data.articles.slice(0, LIMIT))
+        }
+    }, [data])
+
     if (isLoading) {
         return (
             <View style={{ flex: 1, paddingTop: 8 }}>
@@ -32,12 +44,24 @@ const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
         );
     }
 
-    const newsData = data?.articles || [];
+    const loadMoreData = () => {
+        const nextPage = page + 1;
+        const newData = data?.articles.slice(0, nextPage * LIMIT) || [];
+
+        if (newData && newData.length > visibleData.length) {
+            setVisibleData(newData);
+            setPage(nextPage);
+        }
+    }
+
+
 
     const imageDefaul = 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     return (
         <FlatList
-            data={newsData}
+            data={visibleData}
+            onEndReached={loadMoreData}
+            onEndReachedThreshold={0.5}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
             keyExtractor={(item, index) => item.source.id ?? item.url ?? index.toString()}

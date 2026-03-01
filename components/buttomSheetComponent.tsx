@@ -40,7 +40,7 @@ const ButtomSheet = ({ visible, onClose, article }: { visible: boolean, onClose:
     }));
 
     // Jika state internal false, jangan gambar apa pun (Backdrop & Sheet hilang)
-    if (!shouldRender) return null;
+    if (!shouldRender || !article) return null;
 
     const openWebsite = async (url: string) => {
         const open = await Linking.canOpenURL(url)
@@ -52,12 +52,14 @@ const ButtomSheet = ({ visible, onClose, article }: { visible: boolean, onClose:
         }
     }
 
+
     return (
         <Pressable onPress={onClose} style={[styles.backdrop, backdropStyle]}>
             <Animated.View style={[styles.buttomSheet, animatedStyle]}>
-                <Text style={{ paddingHorizontal: 10 }}>{article.description}</Text>
+                <Text style={{ fontSize: 18, fontWeight: 'bold', paddingBottom: 10, marginHorizontal: 16, textAlign: 'center' }}>{article?.title}</Text>
+                <Text style={{ marginHorizontal: 16, textAlign: 'center' }}>{article?.description}</Text>
                 <TouchableOpacity
-                    onPress={() => {openWebsite(article.url);onClose}}
+                    onPress={() => {openWebsite(article.url);onClose()}}
                     style={{ backgroundColor: '#2F48FF', borderRadius: 20, marginTop: 16, paddingVertical: 8, width: '50%' }}>
                     <Text style={{ color: 'white', fontSize: 16, textAlign: 'center' }}>Contonui Read</Text>
                 </TouchableOpacity>
