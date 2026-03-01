@@ -16,8 +16,21 @@ const AllNews = async () => {
     }
 }
 
+const OtomotifNews = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/everything?q=tesla&from=2026-02-01&sortBy=publishedAt&apiKey=${apiKey}`)
+        if (!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json()
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Api = {
-    AllNews
+    AllNews,
+    OtomotifNews
 }
 
 export default Api;

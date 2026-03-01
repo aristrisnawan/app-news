@@ -33,6 +33,7 @@ const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
     useEffect(() => {
         if (data?.articles) {
             setVisibleData(data.articles.slice(0, LIMIT))
+            setPage(1)
         }
     }, [data])
 
@@ -64,7 +65,7 @@ const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
             onEndReachedThreshold={0.5}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{ paddingBottom: 20 }}
-            keyExtractor={(item, index) => item.source.id ?? item.url ?? index.toString()}
+            keyExtractor={(item, index) => `${item.url ?? item.title}-${index}`}
             renderItem={({ item }) => {
                 return (
                     <>

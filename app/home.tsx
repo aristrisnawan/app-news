@@ -14,6 +14,7 @@ const Home = () => {
 
 
     const [allNews, setAllNews] = useState<allNews | null>(null);
+    const [otomotifNews, setOtomotifNews] = useState<allNews | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedArticle, setSelectedArticle] = useState<any>(null);
 
@@ -22,7 +23,9 @@ const Home = () => {
             try {
                 setLoading(true);
                 const response = await Api.AllNews()
+                const otomotifResponse = await Api.OtomotifNews()
                 setAllNews(response)
+                setOtomotifNews(otomotifResponse)
             } catch (error) {
                 console.log("Gagal mengambil berita:", error)
             } finally {
@@ -53,7 +56,10 @@ const Home = () => {
                     setIsOpen(true);
                 }} />;
             case 'otomotif':
-                return <OtomotifNews />;
+                return <OtomotifNews data={otomotifNews} isFocused={isFocused} onPressItem={(item) => {
+                    setSelectedArticle(item);
+                    setIsOpen(true);
+                }} />;
             case 'business':
                 return <Text>Business News</Text>;
             default:
