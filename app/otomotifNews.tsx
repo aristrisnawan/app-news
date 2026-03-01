@@ -27,8 +27,6 @@ const OtomotifNews = ({isFocused, data, onPressItem}: dataArticle) => {
     }, [isFocused]);
 
 
-    const newsData = data?.articles || [];
-
     useEffect(() => {
         if (data?.articles) {
             setVisibleData(data.articles.slice(0, LIMIT))

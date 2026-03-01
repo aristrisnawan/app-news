@@ -28,9 +28,22 @@ const OtomotifNews = async () => {
     }
 }
 
+const BusinessNews = async () => {
+    try {
+        const response = await fetch(`${BASE_URL}/top-headlines?country=us&category=business&apiKey=${apiKey}`)
+        if (!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json()
+    } catch (error) {
+        throw error;
+    }
+}
+
 const Api = {
     AllNews,
-    OtomotifNews
+    OtomotifNews,
+    BusinessNews
 }
 
 export default Api;

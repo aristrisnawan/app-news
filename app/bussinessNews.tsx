@@ -4,13 +4,12 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { useEffect, useState } from "react";
 import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
-
 interface dataArticle {
     isFocused: boolean
     data: allNews | null,
     onPressItem: (item: any) => void
 }
-const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
+const BusinessNews = ({ isFocused, data, onPressItem }: dataArticle) => {
 
     const [isLoading, setIsLoading] = useState(true);
     const [visibleData, setVisibleData] = useState<any[]>([]);
@@ -92,7 +91,7 @@ const AllNews = ({ isFocused, data, onPressItem }: dataArticle) => {
     )
 }
 
-export default AllNews;
+export default BusinessNews;
 
 const styles = StyleSheet.create({
     container: {

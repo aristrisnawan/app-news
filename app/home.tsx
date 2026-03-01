@@ -8,6 +8,7 @@ import { StyleSheet, Text, useWindowDimensions, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { TabBar, TabView } from 'react-native-tab-view';
 import AllNews from "./allNews";
+import BusinessNews from "./bussinessNews";
 import OtomotifNews from "./otomotifNews";
 
 const Home = () => {
@@ -15,8 +16,10 @@ const Home = () => {
 
     const [allNews, setAllNews] = useState<allNews | null>(null);
     const [otomotifNews, setOtomotifNews] = useState<allNews | null>(null);
+    const [bussinesNews, setBussinesNews] = useState<allNews | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedArticle, setSelectedArticle] = useState<any>(null);
+    
 
     useEffect(() => {
         const getAllNews = async () => {
@@ -24,8 +27,10 @@ const Home = () => {
                 setLoading(true);
                 const response = await Api.AllNews()
                 const otomotifResponse = await Api.OtomotifNews()
+                const bussinesResponse = await Api.BusinessNews()
                 setAllNews(response)
                 setOtomotifNews(otomotifResponse)
+                setBussinesNews(bussinesResponse)
             } catch (error) {
                 console.log("Gagal mengambil berita:", error)
             } finally {
@@ -61,7 +66,10 @@ const Home = () => {
                     setIsOpen(true);
                 }} />;
             case 'business':
-                return <Text>Business News</Text>;
+                return <BusinessNews isFocused={isFocused} data={bussinesNews} onPressItem={(item) => {
+                    setSelectedArticle(item);
+                    setIsOpen(true);
+                }} />;
             default:
                 return null;
         }
