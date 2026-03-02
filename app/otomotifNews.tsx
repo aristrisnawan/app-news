@@ -7,10 +7,11 @@ import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react
 interface dataArticle {
     data: allNews | null,
     isFocused?: boolean,
+    searchQuery: string,
     onPressItem: (item: any) => void
 }
 
-const OtomotifNews = ({isFocused, data, onPressItem}: dataArticle) => {
+const OtomotifNews = ({isFocused, data, searchQuery, onPressItem}: dataArticle) => {
      const [isLoading, setIsLoading] = useState(true);
     const [visibleData, setVisibleData] = useState<any[]>([]);
     const [page, setPage] = useState(1);
@@ -42,6 +43,8 @@ const OtomotifNews = ({isFocused, data, onPressItem}: dataArticle) => {
         );
     }
 
+    const filterData = visibleData.filter((item) => item.title?.toLowerCase().includes(searchQuery.toLowerCase()))
+
     const loadMoreData = () => {
         const nextPage = page + 1;
         const newData = data?.articles.slice(0, nextPage * LIMIT) || [];
@@ -57,7 +60,7 @@ const OtomotifNews = ({isFocused, data, onPressItem}: dataArticle) => {
     const imageDefaul = 'https://images.unsplash.com/photo-1530685932526-48ec92998eaa?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     return (
         <FlatList
-            data={visibleData}
+            data={filterData}
             onEndReached={loadMoreData}
             onEndReachedThreshold={0.5}
             showsVerticalScrollIndicator={false}

@@ -19,7 +19,7 @@ const Home = () => {
     const [bussinesNews, setBussinesNews] = useState<allNews | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedArticle, setSelectedArticle] = useState<any>(null);
-    
+    const [searchQuery, setSearchQuery] = useState<string>("");
 
     useEffect(() => {
         const getAllNews = async () => {
@@ -56,20 +56,32 @@ const Home = () => {
         const isFocused = routes[index].key === route.key;
         switch (route.key) {
             case 'all':
-                return <AllNews isFocused={isFocused} data={allNews} onPressItem={(item) => {
-                    setSelectedArticle(item);
-                    setIsOpen(true);
-                }} />;
+                return <AllNews
+                    isFocused={isFocused}
+                    data={allNews}
+                    searchQuery={searchQuery}
+                    onPressItem={(item) => {
+                        setSelectedArticle(item);
+                        setIsOpen(true);
+                    }} />;
             case 'otomotif':
-                return <OtomotifNews data={otomotifNews} isFocused={isFocused} onPressItem={(item) => {
+                return <OtomotifNews 
+                data={otomotifNews} 
+                isFocused={isFocused} 
+                searchQuery={searchQuery}
+                onPressItem={(item) => {
                     setSelectedArticle(item);
                     setIsOpen(true);
                 }} />;
             case 'business':
-                return <BusinessNews isFocused={isFocused} data={bussinesNews} onPressItem={(item) => {
-                    setSelectedArticle(item);
-                    setIsOpen(true);
-                }} />;
+                return <BusinessNews
+                    isFocused={isFocused}
+                    data={bussinesNews}
+                    searchQuery={searchQuery}
+                    onPressItem={(item) => {
+                        setSelectedArticle(item);
+                        setIsOpen(true);
+                    }} />;
             default:
                 return null;
         }
@@ -88,7 +100,7 @@ const Home = () => {
     return (
         <View style={{ flex: 1 }}>
             <SafeAreaView style={{ marginHorizontal: 16, flex: 1 }}>
-                <SearchBarComponent />
+                <SearchBarComponent searchQuery={searchQuery} onChangeText={setSearchQuery} />
                 <Text style={styles.title}>Breaking News</Text>
                 <CardComponent />
                 <TabView
