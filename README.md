@@ -1,51 +1,53 @@
-# Welcome to your Expo app 👋
+# 📰 News Mobile App (React Native)
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+### Overview
 
-## Get started
+News Mobile App is a simple mobile application built with **React Native** that displays the latest news from various categories using the [News API](https://newsapi.org/).
 
-1. Install dependencies
+The application allows users to browse news articles, view summaries, and open the full article directly on the original news website.
 
-   ```bash
-   npm install
-   ```
+This project was created as a **portfolio project** to demonstrate mobile development skills using React Native, API integration, and modern UI components.
 
-2. Start the app
+---
 
-   ```bash
-   npx expo start
-   ```
+### 🚀 Features
 
-In the output, you'll find options to open the app in a
+- 📢 Display **latest news articles**
+- 🗂️ Multiple categories (**All, Business, Otomotif**)
+- 🔎 **Search news** by title
+- ♾️ **Infinite scroll** for loading more articles
+- 📰 **Breaking news section** with randomly selected articles
+- 🔗 Redirect to the **original news website** for full article reading
+- 📱 **Responsive mobile UI**
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+### 🛠 Tech Stack
 
-## Get a fresh project
+- **React Native**
+- **Expo**
+- **TypeScript**
+- [News API](https://newsapi.org/)
+- **React Native Tab View**
+- **FlatList (Infinite Scroll)**
 
-When you're ready, run:
+---
 
-```bash
-npm run reset-project
-```
+### ⚙️ How It Works
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+1. The application fetches news data from the [News API](https://newsapi.org/).
+2. Articles are displayed in different tabs based on category.
+3. Users can search for articles using the search bar.
+4. When a user selects an article, the app opens the original news source in a browser.
 
-## Learn more
+---
 
-To learn more about developing your project with Expo, look at the following resources:
+### 🎯 Purpose of This Project
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+This project demonstrates:
 
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
-# app-news
+- Mobile app development with **React Native**
+- **API integration**
+- **State management** with React Hooks
+- **UI component design**
+- **Infinite scrolling implementation**
